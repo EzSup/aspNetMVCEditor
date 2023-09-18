@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Task9AspMVCApplication.Core.Models.Student>
+
+<h2>Students</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.Surname</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <a asp-controller="StudentEdit" asp-action="Index" asp-route-Student_ID="@student.Id" class="btn btn-primary ml-2" style="margin-left:20px;">Edit</a>
+                    <form asp-controller="Home" asp-action="DeleteStudent" method="post" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                        <input type = "hidden" name="studentId" value="@student.Id" />
+                        <button class="btn btn-danger" style="margin-left: 20px">Delete</button>
+                    </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

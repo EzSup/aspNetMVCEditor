@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Task9AspMVCApplication.Core.Models.Student>
+
+<h2>Edit Student</h2>
+
+@{
+    int id = (int)(ViewBag.Id ?? Model.FirstOrDefault()?.Id);
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="FormatIt" method="post">
+                <div class="form-group">
+                    <label for="studentSelect">Select Student:</label>
+                    <select id="studentSelect" name="studentId" class="form-control">
+                        @foreach (var student in Model)
+                        {
+                            if (student.Id == id)
+                            {
+                                <option value="@student.Id" selected ="selected">@student.Name @student.Surname</option>
+                            }
+                            else
+                            {
+                                <option value="@student.Id" >@student.Name @student.Surname</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentName">Name:</label>
+                    <input type="text" id="studentName" name="name" class="form-control" placeholder="Enter name" />
+                </div>
+
+                <div class="form-group">
+                    <label for="studentSurname">Surname:</label>
+                    <input type="text" id="studentSurname" name="surname" class="form-control" placeholder="Enter surname" />
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" style="margin-top: 20px;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

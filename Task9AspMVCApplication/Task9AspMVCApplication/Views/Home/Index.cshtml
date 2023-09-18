@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Task9AspMVCApplication.Core.Models.Course>
+<h1>Courses</h1>
+@if (TempData["DeleteError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["DeleteError"]
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td style="text-align:right">
+                    <button class="btn btn-success select-btn" data-course-id="@course.Id">Select</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="groupsContainer"></div>
+<div id="studentsContainer"></div>
+
+@section scripts {
+    <script>
+        $(".select-btn").click(function () {
+            var courseId = $(this).data("course-id");
+            $.ajax({
+                url: "/Home/GetGroups?courseId=" + courseId,
+                type: "GET",
+                success: function (data) {
+                    $("#groupsContainer").html(data);
+                    $("#studentsContainer").html("");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $(document).on("click", ".select-group-btn", function () {
+            var groupId = $(this).data("group-id");
+            $.ajax({
+                url: "/Home/GetStudents?groupId=" + groupId,
+                type: "GET",
+                success: function (data) {
+                    $("#studentsContainer").html(data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+}

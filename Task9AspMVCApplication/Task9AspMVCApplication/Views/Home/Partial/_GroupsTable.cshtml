@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Task9AspMVCApplication.Core.Models.Group>
+
+<h2>Groups</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Group ID</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td>@group.Id</td>
+                <td>@group.Name</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success select-group-btn" data-group-id="@group.Id">Select</button>
+                        <a asp-controller="GroupEdit" asp-action="Index" asp-route-Group_ID="@group.Id" class="btn btn-primary ml-2"  style="margin-left:20px;">Edit</a>
+                        <form asp-controller="Home" asp-action="DeleteGroup" method="post" onsubmit="return confirm('Are you sure you want to delete this group?');">
+                            <input type = "hidden" name="groupId" value="@group.Id" />
+                            <button class="btn btn-danger" style="margin-left: 20px">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
